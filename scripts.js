@@ -1,10 +1,15 @@
   // JavaScript for TP6
 
 //function to load a file from the URL "fromFile" into the object identified by "whereTo"
-function loadFileInto(fromFile, whereTo) {
+function loadFileInto(recipeName, listName, whereTo) {
 
 	// creating a new XMLHttpRequest object
 	ajax = new XMLHttpRequest();
+  
+  // define the fromFile variable with the passed recipe name and list
+  fromFile = "recipes.php?recipeName=" + recipeName + "&recipeList=" + listName;
+  
+  console.log("From URL: " + fromFile);
 
 	// defines the GET/POST method, source, and async value of the AJAX object
 	ajax.open("GET", fromFile, true);
@@ -33,18 +38,16 @@ function Recipe(recipeName, contributorName, imageURL, ingredientsURL, equipment
   this.recipeName = recipeName;
   this.contributor = contributorName;
   this.imageURL = imageURL;
-  this.ingredients = ingredientsURL;
-  this.equipment = equipmentURL;
-  this.directions = directionsURL;
   
   this.displayRecipe = function() {
     
     document.querySelector("#titleBanner h1").innerHTML = this.recipeName;
     document.querySelector("#contributor").innerHTML = this.contributor;
     document.querySelector("#titleBanner").style.backgroundImage = "url(" + this.imageURL +")";
-    loadFileInto(this.ingredients, "#ingredients ul");
-    loadFileInto(this.equipment, "#equipment ul");
-    loadFileInto(this.directions, "#directions ol");
+    
+    loadFileInto(this.recipeName, "ingredients", "#ingredients ul");
+    loadFileInto(this.recipeName, "equipment", "#equipment ul");
+    loadFileInto(this.recipeName, "directions", "#directions ol");
     
   }
   
